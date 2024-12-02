@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trang Đăng Nhập</title>
+    <!-- Liên kết đến Bootstrap CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Liên kết đến FontAwesome CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+       body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;  /* Căn giữa theo chiều ngang */
+    align-items: flex-start;  /* Căn phần tử .login-container từ trên cùng */
+    background-image: url('images/comingsoon-bg.jpg'); /* Hình nền */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.login-container {
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.9); /* Nền trắng với độ trong suốt */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Căn giữa nội dung bên trong */
+    justify-content: center; /* Căn giữa nội dung theo chiều dọc */
+    width: fit-content; /* Để chiều rộng của hộp phù hợp với kích thước của logo */
+    max-width: 100%; /* Đảm bảo hộp không vượt quá chiều rộng của màn hình */
+    margin-top: 100px; /* Căn phần tử với khoảng cách từ trên cùng */
+}
+
+.login-logo {
+    width: 150px; /* Độ rộng logo */
+    margin-bottom: 20px;
+}
+
+        .login-container form {
+            margin-top: 20px;
+        }
+
+        /* Style cho logo */
+        .login-logo {
+            width: 250px; /* Độ rộng logo */
+            margin-bottom: 20px;
+        }
+
+        /* Style cho nút */
+        .btn {
+            width: 100%;
+        }
+
+        /* Style cho liên kết */
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .form-outline {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block; /* Đặt thành block để nó đứng một dòng */
+            margin-bottom: 5px; /* Khoảng cách dưới nhãn */
+            text-align: left; /* Căn trái */
+        }
+
+        i {
+            border: solid 3px;
+            padding: 5px;
+            border-radius: 100px;
+        }
+    </style>
+</head>
+<body>
+	<section class="vh-100">
+  <div class="container py-5 h-100">
+   <div class="login-container">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-8 col-lg-7 col-xl-6">
+        <img src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid" alt="Phone image">
+      </div>
+      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+     
+        <form action="/doLogin" method="post">
+          <!-- Email input -->
+           <!-- Chèn logo -->
+        <img src="/images/logo_NotFont.png"  alt="Logo" class="login-logo">
+          <div class="form-outline mb-4">
+            <label class="form-label" for="form1Example13">Tài khoản</label>
+            <input type="text" id="form1Example13" class="form-control form-control-lg" name="customerId" />
+           
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-4">
+          	<label class="form-label" for="form1Example23">Mật khẩu</label>
+            <input type="password" id="form1Example23" class="form-control form-control-lg" name="password" />
+            
+          </div>
+
+          <!-- <div class="form-outline mb-4">
+          	<label class="form-label" for="form1Example23">Code Login</label>
+            <input type="password" id="form1Example23" class="form-control form-control-lg" name="code" />
+          </div> -->
+
+          <div class="d-flex justify-content-around align-items-center mb-4">
+            <!-- Checkbox -->
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="form1Example3"
+                checked
+              />
+              <label class="form-check-label" for="form1Example3"> Lưu mật khẩu </label>
+            </div>
+            <a href="#!">Quên mật khẩu?</a>
+            <a href="/registered">Đăng Ký</a>
+										
+                    
+          </div>
+
+          <!-- Submit button -->
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+
+
+        </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

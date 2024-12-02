@@ -1,0 +1,236 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8" />
+
+<head th:replace="~{/fragments/head :: head}"></head>
+
+<style>
+
+
+
+.st-hiden {
+	display: none;
+}
+</style>
+
+<body>
+
+	<div id="tg-wrapper" class="tg-wrapper tg-haslayout">
+		<!--************************************
+				Header Start
+		*************************************-->
+		<header th:replace="~{/fragments/header :: header}"></header>
+		<!--************************************
+				Header End
+		*************************************-->
+		<!--************************************
+				Inner Banner Start
+		*************************************-->
+		<div class="tg-innerbanner tg-haslayout tg-parallax tg-bginnerbanner" data-z-index="-100" data-appear-top-offset="600" data-parallax="scroll" data-image-src="images/parallax/bgparallax-07.jpg">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="tg-innerbannercontent">
+							<h1>Tất cả sản phẩm</h1>
+							<ol class="tg-breadcrumb">
+								<li><a href="javascript:void(0);" th:href="@{/}">Trang chủ</a></li>
+								<li class="tg-active">Các sản phẩm</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--************************************
+				Inner Banner End
+		*************************************-->
+		<!--************************************
+				Main Start
+		*************************************-->
+		<main id="tg-main" class="tg-main tg-haslayout">
+			<!--************************************
+					News Grid Start
+			*************************************-->
+			<div class="tg-sectionspace tg-haslayout">
+				<div class="container">
+					<div class="row">
+						<div id="tg-twocolumns" class="tg-twocolumns">
+							<div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 pull-right">
+								<div id="tg-content" class="tg-content">
+									<div class="tg-products">
+										<div class="tg-sectionhead">
+											<h2><span>Lựa chọn dành cho bạn</span>Sách bán chạy nhất</h2>
+										</div>
+										
+										<div class="tg-productgrid">
+											<div class="tg-refinesearch">
+												<span>showing 1 to 8 of 20 total</span>
+												<form class="tg-formtheme tg-formsortshoitems">
+													<fieldset>
+														<div class="form-group">
+															<label>sort by:</label>
+															<span class="tg-select">
+																<select>
+																	<option>name</option>
+																	<option>name</option>
+																	<option>name</option>
+																</select>
+															</span>
+														</div>
+														<div class="form-group">
+															<label>show:</label>
+															<span class="tg-select">
+																<select>
+																	<option>8</option>
+																	<option>16</option>
+																	<option>20</option>
+																</select>
+															</span>
+														</div>
+													</fieldset>
+												</form>
+											</div>
+											
+											<div class="col-xs-6 col-sm-6 col-md-4 col-lg-3"  th:each="item : ${bookPage}">
+												<div class="tg-postbook" style="min-height: 650px">
+													<figure class="tg-featureimg">
+														<div class="tg-bookimg">
+															<div class="tg-frontcover"><img th:src="@{'/loadImage?imageName='+${item.bookImage}}" alt="image description" style="height: 255px"></div>
+															<div class="tg-backcover"><img th:src="@{'/loadImage?imageName='+${item.bookImage}}" alt="image description" style="height: 255px"></div>
+														</div>
+														<a class="tg-btnaddtowishlist" href="/login"
+															th:if="${customer.email == null}"> <i
+															class="icon-heart"></i> <span>Đăng Nhập</span>
+														</a>
+
+														<div th:if="${customer.email != null}">
+															<a th:class="tg-btnaddtowishlist + ' ' + ${item.id} "
+																th:attr="onclick=|doFavorite('${item.id}')|"
+																th:if="${item.favorite} == false"> <i
+																class="icon-heart"></i> <span>Thêm yêu thích</span>
+															</a> <a
+																th:class="tg-btnaddtowishlist +  ' ' + ${item.id}  + ' hiden-flagFavorite' + ' st-hiden'  + ' flagFavorite' "
+																th:attr="onclick=|doFavorite('${item.id}')|"
+																style="background: #77b748"> <i class="icon-heart"></i>
+																<span>Đã yêu thích</span>
+															</a> <a
+																th:class="tg-btnaddtowishlist +  ' ' + ${item.id} + ' do-flagFavorite' + ' st-hiden' "
+																th:attr="onclick=|doFavorite('${item.id}')|"> <i
+																class="icon-heart"></i> <span>Thêm yêu thích</span>
+															</a> <a
+																th:class="tg-btnaddtowishlist  + ' ' + ${item.id} + ' hiden-flagFavorite' + ' flagFavorite' + ' bookmark'"
+																th:attr="onclick=|doFavorite('${item.id}')|"
+																style="background: #77b748"
+																th:if="${item.favorite} == true"> <i
+																class="icon-heart"></i> <span>Đã yêu thích</span>
+															</a>
+														</div>
+
+													</figure>
+													<div class="tg-postbookcontent">
+														<ul class="tg-bookscategories">
+															<li><a href="javascript:void(0);" th:text="${item.category?.categoryName}"></a></li>
+														</ul>
+														<div class="tg-themetagbox"><span class="tg-themetag">Giảm giá</span></div>
+														<div class="tg-booktitle">
+															<h3><a href="javascript:void(0);" th:href="@{/productDetail(id=${item.id})}" th:text="${item.bookName}"></a></h3>
+														</div>
+														<span class="tg-bookwriter">Bởi: <a href="javascript:void(0);" th:href="@{/authorDetail(id=${item.id})}" th:text="${item.author?.authorName}"></a></span>
+														<span class="tg-stars"><span></span></span>
+														<span class="tg-bookprice">
+															<ins th:text="${#numbers.formatDecimal(item.price, 1, 'DEFAULT', 0, 'DEFAULT')} + ' VND'"></ins>
+															<del th:text="${#numbers.formatDecimal(item.coverPrice, 1, 'DEFAULT', 0, 'DEFAULT')} + ' VND'"></del>
+														</span>
+														<a class="tg-btn tg-btnstyletwo" th:attr="onclick=|addCart('${item.id}')|">
+															<i class="fa fa-shopping-basket"></i>
+															<em>Thêm giỏ hàng</em>
+														</a>
+													</div>
+												</div>
+											</div>
+											
+<!-- 											<div th:if="${bookPage.totalPages > 0}" class="pagination"
+											    th:each="pageNumber : ${pageNumbers}">
+											    <a th:href="@{/shop(size=${bookPage.size}, page=${pageNumber})}"
+											        th:text=${pageNumber}
+											        th:class="${pageNumber==bookPage.number + 1} ? active"></a>
+											</div> -->
+											
+											
+										</div>
+										<div>
+											<nav aria-label="Page navigation example">
+												<ul class="pagination">
+													<li class="page-item" th:if="${bookPage.totalPages > 0}"
+														th:each="pageNumber : ${pageNumbers}">
+														<a
+															th:href="@{/products(size=${bookPage.size}, page=${pageNumber})}"
+															th:text=${pageNumber}
+															th:class="${pageNumber==bookPage.number + 1} ? active"
+															class="page-link">
+														</a>
+													</li>
+												</ul>
+											</nav>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 pull-left">
+								<aside id="tg-sidebar" class="tg-sidebar">
+									<div class="tg-widget tg-widgetsearch">
+										<form th:action="@{/searchProduct}"
+											class="tg-formtheme tg-formsearch">
+											<div class="form-group">
+												<button type="submit">
+													<i class="icon-magnifier"></i>
+												</button>
+												<input type="search" name="keyword" th:value="${keyword}"
+													class="form-group" placeholder="Tìm kiếm...">
+											</div>
+										</form>
+									</div>
+									
+										<!-- Page 1 -->
+									<th:block th:replace="~{/fragments/basePage :: basePage}"></th:block>
+									
+								</aside>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--************************************
+					News Grid End
+			*************************************-->
+		</main>
+		<!--************************************
+				Main End
+		*************************************-->
+		<!--************************************
+				Footer Start
+		*************************************-->
+		<footer id="tg-footer" class="tg-footer tg-haslayout" th:replace="~{/fragments/footer :: footer}"></footer>
+		<!--************************************
+				Footer End
+		*************************************-->
+	</div>
+	<!--************************************
+			Wrapper End
+	*************************************-->
+	<script src="js/vendor/jquery-library.js"></script>
+	<script src="js/vendor/bootstrap.min.js"></script>
+	<script src="https://maps.google.com/maps/api/js?key=AIzaSyCR-KEWAVCn52mSdeVeTqZjtqbmVJyfSus&amp;language=en"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.vide.min.js"></script>
+	<script src="js/countdown.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/parallax.js"></script>
+	<script src="js/countTo.js"></script>
+	<script src="js/appear.js"></script>
+	<script src="js/gmap3.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/common.js"></script>
+</body>
+
+</html>
