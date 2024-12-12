@@ -1,7 +1,7 @@
 package com.java.repository;
 
 import java.util.List;
-
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -59,5 +59,15 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 	// Sách theo NXB
 	@Query(value = "SELECT * FROM books where company_id = ?", nativeQuery = true)
 	public List<Book> listBookByPublishingHouse(Integer companyId);
+
+	// Hiển thị danh sách thống kê 5 sản phẩm bán chạy nhất
+	@Query(value = "SELECT b.id AS book_id, b.book_name, b.price, b.book_image, SUM(od.quality) AS total_quantity "
+			+ "FROM order_details od " + "JOIN books b ON od.book_id = b.id "
+			+ "GROUP BY b.id, b.book_name, b.price, b.book_image " + "ORDER BY total_quantity DESC", nativeQuery = true)
+	public List<Object[]> lisTop10(Pageable pageable);
+	//Hiển thị tổng số lượng sản phẩm 
+	@Query(value = "SELECT SUM(quality) AS total_quantity FROM books", nativeQuery = true)
+	Integer SumQuantityBook();
+
 
 }

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,9 @@ import javax.validation.Valid;
 import com.java.entity.*;
 import com.java.repository.*;
 import com.java.service.BookService;
+import com.java.service.OrderDetailService;
 
+import java.text.NumberFormat;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,12 +61,31 @@ public class IndexController {
 
 	@Autowired
 	CustomersRepository customerRepository;
+	
+	@Autowired
+	OrderDetailService orderDT_service;
 
 	@GetMapping(value = "/admin/home")
-	public String home() {
-
+	public String home(Model model){
+			model.addAttribute("product_count", bookService.getsumqualityBook());
+			model.addAttribute("order_count", orderDT_service.getsumOrderdetails());
+//			model.addAttribute("account_count", tkdao.getCountTK());
+//			model.addAttribute("tonkho_count", spdao.getCountTonKho());
+			double orderCountTongDT = orderDT_service.getsumdoanhthu();
+			NumberFormat vietnameseFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+			String formattedOrderCount = vietnameseFormat.format(orderCountTongDT);
+			model.addAttribute("order_countTongDT", formattedOrderCount);
+			List<Book> top5SanPham = bookService.getTop10SanPhamBanChay();
+			model.addAttribute("top5SanPham", top5SanPham);
+//			model.addAttribute("order_countHuyDon", dhdao.getCountHuyDon());
+			 // Lấy doanh thu theo tháng từ RevenueService
+			 List<Object[]> revenueData = orderDT_service.getRevenueByMonth("Đã Thanh Toán");
+			    model.addAttribute("revenueData", revenueData);
+			
 		return "admin/index";
 	}
+
+   
 
 	// show order
 	@GetMapping(value = "/admin/orders")
@@ -330,5 +352,23 @@ public class IndexController {
 		bookRepository.deleteById(id);
 		return "redirect:/admin/books";
 	}
+	
+	
+	
+//	@GetMapping("/baocao")
+//	public String baoCao(Model model) {
+////		model.addAttribute("product_count", spdao.getCountSP());
+////		model.addAttribute("order_count", dhdao.getCountDH());
+////		model.addAttribute("account_count", tkdao.getCountTK());
+////		model.addAttribute("tonkho_count", spdao.getCountTonKho());
+////		double orderCountTongDT = dhdao.getCountTongDT();
+////		NumberFormat vietnameseFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+////		String formattedOrderCount = vietnameseFormat.format(orderCountTongDT);
+////		model.addAttribute("order_countTongDT", formattedOrderCount);
+//		List<Book> top5SanPham = bookService.getTop5SanPhamBanChay();
+//		model.addAttribute("top5SanPham", top5SanPham);
+////		model.addAttribute("order_countHuyDon", dhdao.getCountHuyDon());
+//		return "admin/index";
+//	}
 
 }

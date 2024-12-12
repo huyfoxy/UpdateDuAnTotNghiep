@@ -350,7 +350,7 @@ public class CartController {
 		} catch (PayPalRESTException e) {
 			log.error(e.getMessage());
 		}
-		return "redirect:/";
+		return "redirect:/success";
 	}
 
 	@GetMapping(value = "success")

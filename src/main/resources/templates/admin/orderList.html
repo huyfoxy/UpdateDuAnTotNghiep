@@ -158,11 +158,11 @@
 																<a  type="button" title="" class="btn btn-link btn-primary btn-lg" th:href="@{/admin/updateOrder(id=${item.id})}">
 																	<i class="fa fa-edit"></i>
 																</a>
-																<button th:data-id="${item.id}" th:data-name="${item.phoneReceiver}"
+																<!-- <button th:data-id="${item.id}" th:data-name="${item.phoneReceiver}"
 																		onclick="showConfigModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
 																		type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa">
 																	<i class="fa fa-times"></i>
-																</button>
+																</button> -->
 															</div>
 														</div>
 													</td>
@@ -170,13 +170,13 @@
 											</tbody>
 										</table>
 									</div>
-									<script>
+									<!-- <script>
 										function showConfigModalDialog(id, name) {
 											$('#authorName').text(name);
 											$('#yesOption').attr('href', '/admin/deleteOrder?id='+id);
 											$('#configmationId').modal('show');
 										}
-									</script>
+									</script> -->
 
 									<!-- Modal -->
 									<div class="modal" tabindex="-1" role="dialog" id="configmationId">

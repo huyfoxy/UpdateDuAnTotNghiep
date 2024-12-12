@@ -13,4 +13,8 @@ public interface BookService {
 	Book getBookById(Integer id);
 
 	List<Book> getAllBooks();
+	List<Book> getTop10SanPhamBanChay();
+	Integer getsumqualityBook();
+	
+	
 }
