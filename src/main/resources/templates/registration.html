@@ -10,22 +10,22 @@ color:#000;
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script th:src="@{/resources/pwstrength.js}"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
-<title th:utext="#{label.form.title}">form</title>
+<title th:utext="#{label.form.title}">Đăng ký</title>
 </head>
 <body>
     <div class="container">
         <div >
-            <h1>form</h1>
+            <h1>Đăng ký</h1>
             <br/>
             <form action="/user/registration" method="POST" enctype="utf8" >
                 <div class="form-group row" >
-                    <label for="firstName" class="col-sm-3">Full Name</label>
+                    <label for="firstName" class="col-sm-3">Họ và tên</label>
                     <span class="col-sm-5"><input id="firstName" class="form-control" name="fullname" value="" required="required"/></span>
                     <span id="firstNameError" class="alert alert-danger col-sm-4" style="display:none"></span>
                     
                 </div>
                 <div class="form-group row">
-                    <label for="lastName" class="col-sm-3" >customerId</label>
+                    <label for="lastName" class="col-sm-3" >Id người dùng</label>
                     <span class="col-sm-5"><input id="lastName" class="form-control" name="customerId" value="" required="required"/></span>
                     <span id="lastNameError" class="alert alert-danger col-sm-4" style="display:none"></span>
                     
@@ -37,12 +37,12 @@ color:#000;
                     
                 </div>
                 <div class="form-group row">
-                    <label for="password" class="col-sm-3" >password</label>
+                    <label for="password" class="col-sm-3" >Mật khẩu</label>
                     <span class="col-sm-5"><input id="password" class="form-control" name="password" value="" type="password" required="required" autocomplete="new-password"/></span>
                     <span id="passwordError" class="alert alert-danger col-sm-4" style="display:none"></span>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">submit</button>
+                <button type="submit" class="btn btn-primary">Gửi</button>
             </form>
             <br/> 
         </div>

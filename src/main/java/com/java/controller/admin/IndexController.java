@@ -15,6 +15,7 @@ import com.java.entity.*;
 import com.java.repository.*;
 import com.java.service.BookService;
 import com.java.service.OrderDetailService;
+import com.java.service.OrderService;
 
 import java.text.NumberFormat;
 import org.springframework.beans.BeanUtils;
@@ -33,6 +34,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 public class IndexController {
@@ -64,6 +67,8 @@ public class IndexController {
 	
 	@Autowired
 	OrderDetailService orderDT_service;
+	@Autowired
+	OrderService orderservice;
 
 	@GetMapping(value = "/admin/home")
 	public String home(Model model){
@@ -125,32 +130,39 @@ public class IndexController {
 		model.addAttribute("order", orderDsp);
 		return "admin/editOrder";
 	}
-
-	// update đơn hàng 
-	@PostMapping(value = "/admin/doUpdateOrder")
-	public String doUpdateOrder(
-	        @RequestParam("id") Integer id,
-	        @ModelAttribute("order") Order order,
-	        RedirectAttributes rs) {
-	    try {
-	        // Gán ID nếu cần thiết
-	        order.setId(id);
-
-	        // Cập nhật Order
-	        Order updatedOrder = orderRepository.save(order);
-
-	        // Thêm thông báo thành công
-	        rs.addFlashAttribute("message", "Cập nhật đơn hàng thành công!");
-	        rs.addFlashAttribute("order", updatedOrder);
-	    } catch (Exception e) {
-	        // Xử lý lỗi và thêm thông báo thất bại
-	        rs.addFlashAttribute("message", "Cập nhật đơn hàng thất bại. Vui lòng thử lại.");
-	        rs.addFlashAttribute("order", order);
-	    }
-
-	    // Chuyển hướng về trang danh sách đơn hàng
-	    return "redirect:/admin/orders";
+	//CHi tiết đơn hàng 
+	@PostMapping("/admin/orderDetail")
+	public String Orderdetail(@RequestParam("id") String id, Model model) {
+		//TODO: process POST request
+		List<Object[]> order = orderDT_service.getOrderDeltail(id);
+		model.addAttribute("");
+		return "redirect:/admin/orders";
 	}
+	
+
+	// update đơn hàng
+    @PostMapping(value = "/admin/doUpdateOrder")
+    public String doUpdateOrder(
+            @RequestParam("id") Integer id,
+            @ModelAttribute("order") Order order,
+            RedirectAttributes rs) {
+        try {
+            // Sử dụng service để cập nhật Order
+            Order updatedOrder = orderservice.updateOrder(id, order);
+
+            // Thêm thông báo thành công
+            rs.addFlashAttribute("message", "Cập nhật đơn hàng thành công!");
+            rs.addFlashAttribute("order", updatedOrder);
+        } catch (Exception e) {
+            // Xử lý lỗi và thêm thông báo thất bại
+            rs.addFlashAttribute("message", "Cập nhật đơn hàng thất bại. Vui lòng thử lại.");
+            rs.addFlashAttribute("order", order);
+        }
+
+        // Chuyển hướng về trang danh sách đơn hàng
+        return "redirect:/admin/orders";
+    }
+
 
 //	@PostMapping(value = "/admin/doUpdateOrder")
 //	public String doUpdateOrder(@RequestParam("id") Integer id, @ModelAttribute("order") Order order, Model model,

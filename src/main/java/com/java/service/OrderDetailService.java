@@ -8,5 +8,5 @@ public interface OrderDetailService  {
 	Double getsumdoanhthu();
 	
 	List<Object[]> getRevenueByMonth(String status);
-	
+	List<Object[]> getOrderDeltail(String id );
 }

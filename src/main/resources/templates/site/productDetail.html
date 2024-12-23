@@ -162,7 +162,7 @@
 															<div class="tg-description"
 																th:utext="${book.author?.authorInfo}">
 															</div>
-															<a class="tg-btn tg-active" href="javascript:void(0);">Xem tất cả sách</a>
+															<a class="tg-btn tg-active" href="javascript:void(0);"></a>
 														</div>
 													</div>
 												</div>
@@ -215,19 +215,18 @@
 																	<ul class="tg-bookscategories">
 																		<li><a href="javascript:void(0);">[[${item.category.categoryName}]]</a></li>
 																	</ul>
-																	<div class="tg-themetagbox"><span class="tg-themetag">Giáº£m giÃ¡</span></div>
+																	<div class="tg-themetagbox"><span class="tg-themetag">Giảm giá</span></div>
 																	<div class="tg-booktitle">
 																		<h3><a href="javascript:void(0);" th:href="@{/productDetail(id=${item.id})}">[[${item.bookName}]]</a></h3>
 																	</div>
-																	<span class="tg-bookwriter">By: <a href="javascript:void(0);" th:href="@{/authorDetail(id=${item.id})}">[[${item.author?.authorName}]]</a></span>
+																	<span class="tg-bookwriter">Bởi: <a href="javascript:void(0);" th:href="@{/authorDetail(id=${item.id})}">[[${item.author?.authorName}]]</a></span>
 																	<span class="tg-stars"><span></span></span>
 																	<span class="tg-bookprice">
 																		<ins th:text="${#numbers.formatDecimal(item.price, 1, 'DEFAULT', 0, 'DEFAULT')} + ' VND'"></ins>
 																		<del th:text="${#numbers.formatDecimal(item.coverPrice, 1, 'DEFAULT', 0, 'DEFAULT')} + ' VND'"></del>
 																	</span>
 																	<a class="tg-btn tg-btnstyletwo" href="javascript:void(0);">
-																		<i class="fa fa-shopping-basket"></i>
-																		<em>Thêm giỏ hàng</em>
+																		<i class="fa fa-shopping-basket">Thêm giỏ hàng</i>
 																	</a>
 																</div>
 															</div>

@@ -24,5 +24,13 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Intege
 			+ "FROM order_details od " + "JOIN orders o ON od.order_id = o.id " + "WHERE o.order_status = :status "
 			+ "GROUP BY YEAR(o.created_at), MONTH(o.created_at) " + "ORDER BY year, month", nativeQuery = true)
 	List<Object[]> getRevenueByMonth(@Param("status") String status);
-	
+
+	@Query(value = "SELECT \n" + "    o.id AS order_id,\n" + "    o.nameReceiver,\n" + "    o.order_status,\n"
+			+ "    od.book_id,\n" + "    b.book_name,\n" + "    od.quality,\n" + "    od.price,\n"
+			+ "    SUM(od.price * od.quality) OVER (PARTITION BY o.id) AS total_order_value\n" + "FROM \n"
+			+ "    book_store.orders o\n" + "JOIN \n" + "    book_store.order_details od ON o.id = od.order_id\n"
+			+ "JOIN \n" + "    book_store.books b ON od.book_id = b.id\n" + "WHERE \n"
+			+ "    o.id = ?; -- Thay thế ? bằng ID của đơn hàng bạn muốn lấy", nativeQuery = true)
+	List<Object[]> getOrder_detail();
+
 }

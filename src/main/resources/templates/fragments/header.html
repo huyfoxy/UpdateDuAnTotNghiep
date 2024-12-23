@@ -13,37 +13,24 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<ul class="tg-addnav">
 							<li><a href="javascript:void(0);"> <i
-									class="icon-envelope"></i> <em>Contact</em>
+									class="icon-envelope"></i> <em>Liên hệ</em>
 							</a></li>
 							<li><a href="javascript:void(0);"> <i
-									class="icon-question-circle"></i> <em>Help</em>
+									class="icon-question-circle"></i> <em>Trợ giúp</em>
 							</a></li>
 						</ul>
-
-						<div class="dropdown tg-themedropdown tg-currencydropdown">
-							<a href="javascript:void(0);" id="tg-currenty"
-								class="tg-btnthemedropdown" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false"> <i
-								class="icon-earth"></i> <span>Currency</span>
-							</a>
-							<ul class="dropdown-menu tg-themedropdownmenu"
-								aria-labelledby="tg-currenty">
-								<li><a href="javascript:void(0);"> <i>Ä‘</i> <span>VNÄ�</span>
-								</a></li>
-							</ul>
-						</div>
 
 						<div class="tg-userlogin" th:if="${customer.email != null}">
 							<div class="dropdown tg-themedropdown tg-currencydropdown">
 								<a href="javascript:void(0);" id="tg-currenty"
 									class="tg-btnthemedropdown" data-toggle="dropdown"
 									aria-haspopup="true" aria-expanded="false"> <i
-									class="icon-earth"></i> <span>Hi ,
+									class="icon-earth"></i> <span>Chào ,
 										[[${customer.fullname}]] </span>
 								</a>
 								<ul class="dropdown-menu tg-themedropdownmenu"
 									aria-labelledby="tg-currenty">
-									<li><a th:href="@{/logout}"> <span>Logout</span>
+									<li><a th:href="@{/logout}"> <span>Đăng xuất</span>
 									</a></li>
 								</ul>
 							</div>
@@ -58,7 +45,7 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<strong class="tg-logo"><a th:href="@{/}"><img
-								src="images/logo.png" width="170px" alt="company name here"></a></strong>
+								src="images/logoUpdate.png" width="150px" alt="company name here"></a></strong>
 						<div class="tg-wishlistandcart">
 							<div class="dropdown tg-themedropdown tg-wishlistdropdown">
 								<a href="/favorite" id="tg-wishlisst"
@@ -66,9 +53,7 @@
 									id="totalFavorite" th:text="${totalSave}"></span> <i
 									class="icon-heart"></i> <span>Yêu thích</span>
 								</a>
-								<!-- <div class="dropdown-menu tg-themedropdownmenu" aria-labelledby="tg-wishlisst">
-										<div class="tg-description"><p><a>Không có sản phẩm nào trong danh sách yêu thích!</a></p></div>
-									</div> -->
+
 							</div>
 							<div class="dropdown tg-themedropdown tg-minicartdropdown">
 								<a href="javascript:void(0);" id="tg-minicart"
@@ -113,8 +98,6 @@
 									</div>
 
 									<div class="tg-minicartfoot">
-										<a class="tg-btnemptycart" href="javascript:void(0);"> <i
-											class="fa fa-trash-o"></i> <span>Clear Your Cart</span>
 										</a> <span class="tg-subtotal">Tổng tiền <strong>[[${#numbers.formatDecimal(item.book.price
 												* item.quantity, 1, 'DEFAULT', 0, 'DEFAULT')} + ' VND']]</strong></span>
 										<div class="tg-btns">

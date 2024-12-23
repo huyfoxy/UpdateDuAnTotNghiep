@@ -1,19 +1,26 @@
 package com.java.controller.admin;
 
-import com.java.entity.Customer;
-import com.java.repository.CustomersRepository;
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+import com.java.entity.Customer;
+import com.java.repository.CustomersRepository;
 
 @Controller
 public class UserController {
@@ -72,7 +79,7 @@ public class UserController {
 		return "redirect:/admin/userList";
 	}
 
-	// add customer
+	/*// add customer
 	@PostMapping(value = "/admin/addUser")
 	public String addUser(Model model, @Valid @ModelAttribute("customer") Customer customer, BindingResult result,
 			 HttpServletRequest httpServletRequest) {
@@ -99,9 +106,53 @@ public class UserController {
 		}
 
 		return "redirect:/admin/userList";
+	}*/
+	@PostMapping(value = "/admin/addUser")
+	public String addUser(Model model, 
+	                      @Valid @ModelAttribute("customer") Customer customer, 
+	                      BindingResult result,
+	                      HttpServletRequest httpServletRequest,
+	                      RedirectAttributes redirectAttributes) {
+	    // Kiểm tra username đã tồn tại hay chưa
+	    Customer existingCustomer = customerRepositoy.findCustomersLogin(customer.getCustomerId());
+	    // Kiểm tra email đã tồn tại hay chưa
+	    Optional<Customer> existingEmail = customerRepositoy.findByEmail(customer.getEmail());
+
+	    // Nếu username đã tồn tại
+	    if (existingCustomer != null) {
+	        redirectAttributes.addFlashAttribute("error", "Tên tài khoản đã tồn tại!");
+	        redirectAttributes.addFlashAttribute("customer", customer); // Giữ lại dữ liệu
+	        return "redirect:/admin/userList";
+	    }
+
+	    // Nếu email đã tồn tại
+	    if (existingEmail.isPresent()) {
+	        redirectAttributes.addFlashAttribute("error", "Email đã tồn tại!");
+	        redirectAttributes.addFlashAttribute("customer", customer); // Giữ lại dữ liệu
+	        return "redirect:/admin/userList";
+	    }
+
+	    // Xử lý khi dữ liệu hợp lệ
+	    try {
+	        customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
+	        customer.setUsing2FA(false);
+	        customer.setRoleId("2");
+	        Customer savedCustomer = customerRepositoy.save(customer);
+
+	        if (savedCustomer != null) {
+	            redirectAttributes.addFlashAttribute("success", "Thêm mới người dùng thành công!");
+	        } else {
+	            redirectAttributes.addFlashAttribute("error", "Thêm mới thất bại! Vui lòng thử lại.");
+	        }
+	    } catch (Exception e) {
+	        redirectAttributes.addFlashAttribute("error", "Đã xảy ra lỗi trong quá trình thêm mới!");
+	    }
+
+	    return "redirect:/admin/userList";
 	}
 
-	// delete customer
+
+	/*// delete customer
 	@GetMapping("/admin/deleteUser")
 	public String deleteAuthor(@RequestParam("id") String id, Model model) {
 		Customer customer = customerRepositoy.findCustomersLogin(id);
@@ -110,6 +161,34 @@ public class UserController {
 		}
 
 		return "redirect:/admin/userList";
+	}*/
+	@GetMapping("/admin/deleteUser")
+	public String deleteUser(@RequestParam("id") String id, Model model, RedirectAttributes redirectAttributes) {
+	    // Tìm customer theo ID
+	    Customer customer = customerRepositoy.findCustomersLogin(id);
+	    
+	    if (customer != null) {
+	        try {
+	            // Kiểm tra ràng buộc: xem customer có liên kết với các Order không
+	            if (!customer.getOrders().isEmpty()) {
+	                // Nếu có liên kết, gửi thông báo cảnh báo
+	                redirectAttributes.addFlashAttribute("errordelete", "Không thể xóa người dùng vì có đơn hàng liên kết.");
+	            } else {
+	                // Không có liên kết, tiến hành xóa
+	                customerRepositoy.delete(customer);
+	                redirectAttributes.addFlashAttribute("successdelete", "Xóa người dùng thành công.");
+	            }
+	        } catch (Exception e) {
+	            // Xử lý các lỗi khác (ví dụ ngoại lệ SQL)
+	            redirectAttributes.addFlashAttribute("errordelete", "Không thể xóa người dùng vì có đơn hàng liên kết.");
+	        }
+	    } else {
+	        redirectAttributes.addFlashAttribute("error", "Người dùng không tồn tại.");
+	    }
+	    
+	    // Chuyển hướng về danh sách người dùng
+	    return "redirect:/admin/userList";
 	}
+
 
 }

@@ -33,4 +33,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public List<Object[]> getRevenueByMonth(String status) {
         return orderDetailRepository.getRevenueByMonth(status);
     }
+    @Override
+    public List<Object[]> getOrderDeltail(String id ) {
+        return orderDetailRepository.getOrder_detail();
+    }
 }

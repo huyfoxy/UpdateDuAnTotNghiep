@@ -10,7 +10,7 @@
 <!-- Fonts and icons -->
 <script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
+<!-- <script>
 	WebFont.load({
 		google : {
 			"families" : [ "Lato:300,400,700,900" ]
@@ -25,7 +25,58 @@
 			sessionStorage.fonts = true;
 		}
 	});
-</script>
+</script> -->
+<style type="text/css">
+.widget-small {
+    border: 2px solid #ddd; /* Viền ngoài */
+    border-radius: 10px; /* Góc bo tròn */
+    padding: 15px; /* Khoảng cách nội dung */
+    margin: 10px; /* Khoảng cách giữa các phần tử */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hiệu ứng nổi */
+    transition: transform 0.3s, box-shadow 0.3s; /* Hiệu ứng hover */
+}
+
+.widget-small:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Tăng hiệu ứng nổi */
+}
+
+.widget-small .info h4 {
+    color: #333; /* Màu chữ tiêu đề */
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.widget-small .info p b {
+    color: #555; /* Màu chữ thông tin */
+    font-size: 16px;
+}
+
+.widget-small.info {
+    background-color: #d1ecf1; /* Nền xanh nhạt */
+    border-color: #17a2b8;
+}
+
+.widget-small.warning {
+    background-color: #fff3cd; /* Nền vàng nhạt */
+    border-color: #ffc107;
+}
+
+.widget-small.danger {
+    background-color: #f8d7da; /* Nền đỏ nhạt */
+    border-color: #dc3545;
+}
+
+.widget-small.primary {
+    background-color: #cce5ff; /* Nền xanh dương nhạt */
+    border-color: #007bff;
+}
+
+.widget-small .icon {
+    color: #555; /* Màu biểu tượng */
+    margin-right: 10px;
+}
+</style>
 
 <!-- CSS Files -->
 <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
@@ -72,7 +123,7 @@
 					<div class="widget-small warning coloured-icon">
 						<i class='icon fa-3x bx bxs-shopping-bag-alt'></i>
 						<div class="info">
-							<h4>Tổng đơn hàng</h4>
+							<h4>Tổng sách đã được đặt</h4>
 							<p>
 								<b th:text="${order_count}"></b>
 							</p>
@@ -102,6 +153,31 @@
 					</div>
 				</div>
 			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+
+					<div class="tile">
+						<h3 class="tile-title">THỐNG KÊ DOANH THU</h3>
+						<div>
+							<canvas id="revenueChart" width="400" height="200"></canvas>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-md-6">
+					<!-- <button ng-click="XuatDTTheoQuy()" class="btn btn-success">Xuất
+						Excel</button> -->
+					<div class="tile">
+						<h3 class="tile-title">THỐNG KÊ DOANH THU </h3>
+						<div>
+							<canvas id="quarterlyRevenueChart" width="400" height="200"></canvas>
+						</div>
+					</div>
+				</div>
+				</div>
+				
 			<div class="row">
 				<div class="col-md-12">
 					<div class="tile">
@@ -144,7 +220,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			
 			<!-- <canvas id="revenueData" width="400" height="200"></canvas>
 			<script>
     // Gọi API để lấy dữ liệu doanh thu theo tháng
@@ -189,28 +265,7 @@
             });
         });
 </script> -->
-			<div class="row">
-				<div class="col-md-6">
-
-					<div class="tile">
-						<h3 class="tile-title">THỐNG KÊ DOANH THU</h3>
-						<div>
-							<canvas id="revenueChart" width="400" height="200"></canvas>
-						</div>
-					</div>
-				</div>
-
-
-				<div class="col-md-6">
-					<!-- <button ng-click="XuatDTTheoQuy()" class="btn btn-success">Xuất
-						Excel</button> -->
-					<div class="tile">
-						<h3 class="tile-title">THỐNG KÊ DOANH THU </h3>
-						<div>
-							<canvas id="quarterlyRevenueChart" width="400" height="200"></canvas>
-						</div>
-					</div>
-				</div>
+			
 			</div>
 
 			<div class="text-right" style="font-size: 12px">
@@ -219,6 +274,7 @@
 				</p>
 			</div>
 		</div>
+		
 
 
 
